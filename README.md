@@ -55,7 +55,7 @@ The code for this step is contained in the function undistort_image() of the IPy
 
 ####2. perspective transform
 
-The code for my perspective transform includes a function called `getPerspectiveTransform_values()`,  in the IPython notebook located in "./P4-CarND-Advanced-Lane-Lines-master.ipynb".  The `getPerspectiveTransform_values()` function takes as inputs an image (`image size`), as well as source (`src`) and offset .  After dat It will apply the `warp_image()` function with the return of the perspective transform and  the image. 
+The code for my perspective transform includes a function called `getPerspectiveTransform_values()`,  in the IPython notebook located in "./P4-CarND-Advanced-Lane-Lines-master.ipynb".  The `getPerspectiveTransform_values()` function takes as inputs an image (`image size`), as well as source (`src`) and offset .  After that it will apply the `warp_image()` function with the return of the perspective transform and  the image. 
 To know the source (`src`) for this perspective transform I used the following code:
 ```
 ltop = 0.07
@@ -128,8 +128,9 @@ This is the result:
 
 ###Pipeline (video)
 
-Here's a [link to my video result](./project_video_output.mp4)
-Here's a [link to my video result](./challenge_video_output.mp4)
+Here's a [link to video ouput result](./project_video_output.mp4)
+Here's a [link to challenge video result](./challenge_video_output.mp4)
+Here's a [link to harder challenge video result](./challenge_video_output.mp4) Note: This is only a test that there are a lot of steps that can be improve.
 
 ---
 
@@ -143,4 +144,6 @@ the order that I took to perform the tasks:
 * Apply a perspective transform to rectify binary image ("birds-eye view").
 * Use color mask and sobel filters to create a thresholder binary image.
 Is because the mask will be clean to analysis, First I tried on the contrary and I was getting more noise.
+
+For the hard frames to work on, I'm saving the last 5 lines in the `Lines` class to compare to the new line found. To know if this is good I'm checking it with a Mean squared error <40 and the evaluation af all the frame in the function `fit_polinomial_sliding_windows`
 
