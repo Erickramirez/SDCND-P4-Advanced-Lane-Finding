@@ -135,7 +135,7 @@ Here's a [link to harder challenge video result](./challenge_video_output.mp4) N
 ---
 
 ###Discussion
-####Issues found:
+
 #####1. On this project there is a lot of combinations for color mask and Sobel filter, or even other techniques. A little change can have a huge impact on the result. 
 #####2. To get a better result for more curved lines I checked a lot of approaches for the `fit_polinomial_sliding_windows` and my solution was to reevaluate the histogram and move in 'y' is inversely proportional to move in 'x'.
 #####3. My algorithm is not good enough for the harder challenge, but I can find some parts of the video (video attached)
