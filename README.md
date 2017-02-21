@@ -1,0 +1,2 @@
+# SDCND-P4-Advanced-Lane-Finding
+In the context of traffic control, a lane is part of a roadway that is designated for use by a single line of vehicles, to control and guide drivers and reduce traffic conflicts https://en.wikipedia.org/wiki/Lane). Lane finding is important for perception in order to know about the environment and the road. This project is applying computer vision techniques to detect the lane where the car is located for perception. 
