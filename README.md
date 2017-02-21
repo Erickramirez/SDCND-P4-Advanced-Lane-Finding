@@ -18,7 +18,7 @@ i.	fit_polinomial_sliding_windows and ii.	fit_polinomial_based_on_lines
 
 [//]: # (Image References)
 
-[image1]: ./images/corners.jpg "Corners"
+[image1]: ../images/corners.jpg "Corners"
 [image2]: https://www.w3schools.com/css/img_fjords.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
