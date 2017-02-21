@@ -9,7 +9,7 @@ The steps of this project are the following:
 * Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
 * Apply a distortion correction to raw images.
 * Apply a perspective transform to rectify binary image ("birds-eye view").
-* Use color transforms, gradients, etc., to create a thresholded binary image.
+* Use color mask and sobel filters to create a thresholded binary image.
 * Detect lane pixels and fit to find the lane boundary. There are two algoritms to perform this task:
 i.	fit_polinomial_sliding_windows and ii.	fit_polinomial_based_on_lines 
 * Determine the curvature of the lane and vehicle position with respect to center.
@@ -21,8 +21,8 @@ i.	fit_polinomial_sliding_windows and ii.	fit_polinomial_based_on_lines
 [image1]: ./images/corners.JPG "Corners"
 [image2]: ./images/Undistorted_Image.JPG "Undistorted Image"
 [image3]: ./images/Road_Undistorted_Image.jpg "Road Undistorted Image"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image4]: ./images/birds_eye_view.JPG "birds eye view"
+[image5]: ./images/color_mask_and_Sobel_Filters.JPG "color mask and Sobel Filters"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
@@ -33,7 +33,7 @@ i.	fit_polinomial_sliding_windows and ii.	fit_polinomial_based_on_lines
 
 The code for this step is contained in the second code cell of the IPython notebook located in "./camera_calibration.ipynb" 
 
-I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (p, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
+I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (9, 6) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
 ![alt text][image1]
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  The code for this step is contained in the last code cell of the IPython notebook located in "./camera_calibration.ipynb" 
@@ -45,16 +45,25 @@ I applied this distortion correction to the test image using the `cv2.undistort(
 ###Read and undistort image
 
 ####1. read the image and apply the distortion coefficients found in the camera calibration, this help to reconstruct a world model with more accuracy.
+The code for this step is contained in the function undistort_image() of the IPython notebook located in "./P4-CarND-Advanced-Lane-Lines-master.ipynb" 
+![alt text][image3]
+
+####2. perspective transform
+
+The code for my perspective transform includes a function called `getPerspectiveTransform_values()`,  in the IPython notebook located in "./P4-CarND-Advanced-Lane-Lines-master.ipynb".  The `getPerspectiveTransform_values()` function takes as inputs an image (`image size`), as well as source (`src`) and offset .  After dat It will apply the `warp_image()` function with the return of the perspective transform and  the image. 
+![alt text][image4]
+
+####3.Use color mask and sobel filters to create a thresholded binary image: 
+#####i.	Select yellow color: transform the RGB image to HSV image and use the following range: [22, 35, 80] to [100, 255, 255]
+#####ii.	Select white color: transform the RGB image to HLS image and use the following range: [0, 180, 160] to [150, 255, 255]
+#####iii.	Filter for saturation:  transform the RGB image to HLS image and use the following range: [20, 0, 100] to [100, 255, 255]
+#####iv.	Apply color mask using Or operator: mask[(hsv_yellow ==255)| (hls == 255) | (hls_white == 255)] = 1
 The code for this step is contained in the second code cell of the IPython notebook located in "./P4-CarND-Advanced-Lane-Lines-master.ipynb" 
-![alt text][image3]
-####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+Here's an example of my output for this step.  (note: For this image I applied bitwise_and using as a mask the restult of this step)
 
-![alt text][image3]
+![alt text][image5]
 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
 ```
 src = np.float32(
